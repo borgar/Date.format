@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+ 
+<html lang="en">
+<head>
+  <meta charset=utf-8 />
+  <title>Date.format test</title>
+ 
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+  <link rel="stylesheet" href="http://github.com/jquery/qunit/raw/master/qunit/qunit.css" type="text/css" />
+  <script src="http://github.com/jquery/qunit/raw/master/qunit/qunit.js"></script>
+ 
+ <!-- links to scripts to test -->
+  <script>window.original_date_format = Date.format;</script>
+  <script src="dateformat.js"></script>
+ 
+  <script>
+  
+  module('Date.format');
+
+  test("Loads", function() {
+      expect(3);
+      ok( Date, "Date is present" );
+      ok( Date.format, "Date.format() is present" );
+      ok( jQuery.isFunction(Date.format), "Date.format() is a function" );
+  });
+
+  test('No conflict', function () {
+    expect(2);
+      var formatFunc = Date.format;
+      equals( formatFunc, Date.format.noConflict(), "noConflict returned the date format function" );
+      equals( Date.format, original_date_format, "Make sure Date.format was reverted" );
+    Date.prototype.f = function (s) { return formatFunc( this, s ); };
+  });
+
+  test('Format tests', function () {
+    // expect(2);
+    var dt = new Date( 2006, 7, 10, 15, 5, 8 );
+    equals( dt.f('d'), '10', 'format: d' );
+    equals( dt.f('D'), 'Thu', 'format: D' );
+    equals( dt.f('j'), '10', 'format: j' );
+    equals( dt.f('l'), 'Thursday', 'format: l' );
+    equals( dt.f('N'), '4', 'format: N' );
+    equals( dt.f('S'), 'th', 'format: S' );
+    equals( dt.f('w'), '4', 'format: w' );
+    equals( dt.f('z'), '221', 'format: z' );
+    equals( dt.f('W'), '32', 'format: W' );
+    equals( dt.f('F'), 'August', 'format: F' );
+    equals( dt.f('m'), '08', 'format: m' );
+    equals( dt.f('M'), 'Aug', 'format: M' );
+    equals( dt.f('n'), '8', 'format: n' );
+    equals( dt.f('t'), '31', 'format: t' );
+    equals( dt.f('L'), '0', 'format: L' );
+    equals( dt.f('o'), '2006', 'format: o' );
+    equals( dt.f('Y'), '2006', 'format: Y' );
+    equals( dt.f('y'), '06', 'format: y' );
+    equals( dt.f('a'), 'pm', 'format: a' );
+    equals( dt.f('A'), 'PM', 'format: A' );
+    equals( dt.f('B'), '670', 'format: B' );
+    equals( dt.f('g'), '3', 'format: g' );
+    equals( dt.f('G'), '15', 'format: G' );
+    equals( dt.f('h'), '03', 'format: h' );
+    equals( dt.f('H'), '15', 'format: H' );
+    equals( dt.f('i'), '05', 'format: i' );
+    equals( dt.f('s'), '08', 'format: s' );
+    equals( dt.f('u'), '000000', 'format: u' );
+    equals( dt.f('e'), 'UTC', 'format: e' );
+    equals( dt.f('I'), '0', 'format: I' );
+    equals( dt.f('O'), '+0000', 'format: O' );
+    equals( dt.f('P'), '+00:00', 'format: P' );
+    equals( dt.f('T'), 'UTC', 'format: T' );
+    equals( dt.f('Z'), '0', 'format: Z' );
+    equals( dt.f('c'), '2006-08-10T15:05:08+00:00', 'format: c' );
+    equals( dt.f('r'), 'Thu, 10 Aug 2006 15:05:08 +0000', 'format: r' );
+    equals( dt.f('U'), '1155222308', 'format: U' );
+
+    var dt = new Date( 1961, 0, 3, 1, 51, 10 );
+    equals( dt.f('d'), '03', 'format: d' );
+    equals( dt.f('D'), 'Tue', 'format: D' );
+    equals( dt.f('j'), '3', 'format: j' );
+    equals( dt.f('l'), 'Tuesday', 'format: l' );
+    equals( dt.f('N'), '2', 'format: N' );
+    equals( dt.f('S'), 'rd', 'format: S' );
+    equals( dt.f('w'), '2', 'format: w' );
+    equals( dt.f('z'), '2', 'format: z' );
+    equals( dt.f('W'), '01', 'format: W' );
+    equals( dt.f('F'), 'January', 'format: F' );
+    equals( dt.f('m'), '01', 'format: m' );
+    equals( dt.f('M'), 'Jan', 'format: M' );
+    equals( dt.f('n'), '1', 'format: n' );
+    equals( dt.f('t'), '31', 'format: t' );
+    equals( dt.f('L'), '0', 'format: L' );
+    equals( dt.f('o'), '1961', 'format: o' );
+    equals( dt.f('Y'), '1961', 'format: Y' );
+    equals( dt.f('y'), '61', 'format: y' );
+    equals( dt.f('a'), 'am', 'format: a' );
+    equals( dt.f('A'), 'AM', 'format: A' );
+    equals( dt.f('B'), '119', 'format: B' );
+    equals( dt.f('g'), '1', 'format: g' );
+    equals( dt.f('G'), '1', 'format: G' );
+    equals( dt.f('h'), '01', 'format: h' );
+    equals( dt.f('H'), '01', 'format: H' );
+    equals( dt.f('i'), '51', 'format: i' );
+    equals( dt.f('s'), '10', 'format: s' );
+    equals( dt.f('u'), '000000', 'format: u' );
+    equals( dt.f('e'), 'UTC', 'format: e' );
+    equals( dt.f('I'), '0', 'format: I' );
+    equals( dt.f('O'), '+0000', 'format: O' );
+    equals( dt.f('P'), '+00:00', 'format: P' );
+    equals( dt.f('T'), 'UTC', 'format: T' );
+    equals( dt.f('Z'), '0', 'format: Z' );
+    equals( dt.f('c'), '1961-01-03T01:51:10+00:00', 'format: c' );
+    equals( dt.f('r'), 'Tue, 03 Jan 1961 01:51:10 +0000', 'format: r' );
+    equals( dt.f('U'), '-283817330', 'format: U' );
+
+  });
+  </script>
+
+</head>
+<body>
+ <h1 id="qunit-header">Date.format</h1>
+ <h2 id="qunit-banner"></h2>
+ <h2 id="qunit-userAgent"></h2>
+ <ol id="qunit-tests"></ol>
+</body>
+</html>
