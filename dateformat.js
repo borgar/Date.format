@@ -12,7 +12,8 @@
 (function(){
 
   function pad ( n, l ) {
-    return ( '00000000' + n ).substr( -( l || 2 ) );
+    var s = ( '00000000' + n );
+    return s.substring( s.length -( l || 2 ) );
   }
 
   function date ( d, fmt ) {
