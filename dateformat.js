@@ -12,7 +12,7 @@
 (function(){
 
   function pad ( n, l ) {
-    var s = ( '00000000' + n );
+    var s = '00000000' + n;
     return s.substring( s.length -( l || 2 ) );
   }
 
@@ -186,8 +186,8 @@
     },
 
     // Microseconds
-    u: function (d) {
-      return pad( d.getMilliseconds(), 6 );
+    u: function (d, l) {
+      return pad( d.getMilliseconds(), l||6 );
     },
 
     // TODO: Timezone identifier
@@ -222,7 +222,7 @@
 
     // ISO 8601 date
     c: function (d) {
-      return date( d, 'Y-m-d\\TH:i:sP' );
+      return date( d, 'Y-m-d\\TH:i:s.' ) + this.u(d,3) + 'Z';
     },
 
     // RFC 2822 formatted date
